@@ -43,6 +43,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        timerText = findViewById(R.id.timerText)
+        countText = findViewById(R.id.countText)
+        topScoresText = findViewById(R.id.topScoresText)
+        tapButton = findViewById(R.id.tapButton)
+        resetButton = findViewById(R.id.resetButton)
+        resetHighScoresButton = findViewById(R.id.resetHighScoresButton)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
