@@ -1,6 +1,5 @@
 package com.example.tapcounter2025
 
-import android.media.MediaActionSound
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -24,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private var tapCount = 0
     private var isRunning = false
     private lateinit var timer: CountDownTimer
-    private  val topScores = mutableListOf<Int>()
+    private val topScores = mutableListOf<Int>()
 
     private lateinit var tapSound: MediaPlayer
     private lateinit var gameOverSound: MediaPlayer
@@ -32,12 +31,11 @@ class MainActivity : AppCompatActivity() {
     private val PREFS_NAME = "HighScores"
     private val SCORES_KEY = "TopScores"
 
-    private var screenWidt = 0
-    private var screenHight = 0
+    private var screenWidth = 0
+    private var screenHeight = 0
 
     private var originalX = 0f
     private var originalY = 0f
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,10 +52,29 @@ class MainActivity : AppCompatActivity() {
         tapSound = MediaPlayer.create(this, R.raw.tap_sound)
         gameOverSound = MediaPlayer.create(this, R.raw.game_over)
 
-        val totalTime = 20 * 1000
+        val totalTime = 20 * 1000L
 
+        timer = object : CountDownTimer(totalTime, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                val secondsLeft = millisUntilFinished / 1000
+                timerText.text = getString(R.string.time_left, secondsLeft)
+            }
+
+            override fun onFinish() {
+                timerText.text = getString(R.string.time_up)
+                tapButton.isEnabled = false
+                isRunning = false
+            }
+
+        }
 
         tapButton.setOnClickListener {
+            if (!isRunning) {
+                isRunning = true
+                timer.start()
+            }
+
             tapCount++
             countText.text = getString(R.string.taps, tapCount)
         }
