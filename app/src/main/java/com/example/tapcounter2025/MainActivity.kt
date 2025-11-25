@@ -51,6 +51,17 @@ class MainActivity : AppCompatActivity() {
         resetButton = findViewById(R.id.resetButton)
         resetHighScoresButton = findViewById(R.id.resetHighScoresButton)
 
+        tapSound = MediaPlayer.create(this, R.raw.tap_sound)
+        gameOverSound = MediaPlayer.create(this, R.raw.game_over)
+
+        val totalTime = 20 * 1000
+
+
+        tapButton.setOnClickListener {
+            tapCount++
+            countText.text = getString(R.string.taps, tapCount)
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
